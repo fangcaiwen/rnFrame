@@ -81,4 +81,20 @@ window:gradlew assembleRelease
 
 ```
 
+**IOS**
+
+```
+1.在ios文件夹下新建bundle文件夹
+
+2.执行语句：
+
+// 生成bundle
+react-native bundle --platform ios --dev false --entry-file index.js  --bundle-output  ios/bundle/index.ios.bundle  --assets-dest ios/bundle
+
+
+3.打开Xcode引入项目文件ios,
+
+
+```
+
 
