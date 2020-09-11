@@ -92,7 +92,20 @@ window:gradlew assembleRelease
 react-native bundle --platform ios --dev false --entry-file index.js  --bundle-output  ios/bundle/index.ios.bundle  --assets-dest ios/bundle
 
 
-3.打开Xcode引入项目文件ios,
+3. a. 打开Xcode引入项目文件ios,右键打开项目同项目名的rnFrame的菜单，Add Files to "RNIos"。
+   b. 然后选择bundle文件，在option中选择 Create folder references
+   c. 点击Add(即可把bundle加入到项目当中，注意加入进来的文件夹必须是蓝色)
+
+4.修改debug状态
+  Xcode——>Product——>Schema——>Edit Scheme，查看run选择的模式，将项目由debug状态改成release状态（debug为内测，release为发布App Store）
+
+5.点击项目根文件，确保左上角选择的是Generic IOS Device,即rnFrame>Generic IOS Device
+
+6.点击General,填写Identity,版本号，Bundle Identifier等信息
+
+7.点击并确认Signing & Capabilities等信息
+
+8.点击Product——Archive开始打包。显示build完成之后，显示弹框：点击Distribute App 即可一步步选择便可打包完成
 
 
 ```
