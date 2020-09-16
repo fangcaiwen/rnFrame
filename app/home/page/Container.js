@@ -35,7 +35,7 @@ export default class HomeTabScreen extends Component {
             <View style={styles.container}>
                 <Text>{HomeStore.num}</Text>
 
-                <BigButton title="点击数字更改+"
+                <BigButton title="点击数字更改+1"
                            viewStyle={{marginTop: dimens.scaleHeight(10)}}
                            onPressEvent={() => HomeStore.addNum()}/>
 
