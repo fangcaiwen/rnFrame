@@ -13,3 +13,8 @@ import httpHelper from './HttpHelper'
 export const getHomeApi = () => {
     return httpHelper.GET(Urls.GETHOMEDETAILL());
 };
+
+// 登录
+export const login = (params) => {
+    return httpHelper.POST(Urls.LOGINURL(), params, false);
+};

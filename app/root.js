@@ -19,7 +19,7 @@ export default class App extends Component<{}> {
     componentDidMount() {
         // 初始化接口请求
         HttpHelper.init(BaseUrl, (rel) => {
-            SystemUtil.jsConsoleLog("api请求", rel);
+            SystemUtil.jsConsoleLog("api请求root", rel);
         });
     }
 

@@ -8,9 +8,11 @@
 import BigButton from './BigButton';
 import NavigationBar from './NavigationBar';
 import LoadingView from './LoadingView';
+import RowInput from './RowInput';
 
 export {
     BigButton,
     NavigationBar,
-    LoadingView
+    LoadingView,
+    RowInput
 }

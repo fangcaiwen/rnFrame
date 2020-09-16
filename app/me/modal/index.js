@@ -7,9 +7,11 @@
  */
 
 import MeStore from './meStore';
+import LoginStore from './loginStore';
 
 const me = {
-    MeStore
+    MeStore,
+    LoginStore
 };
 
 export default me

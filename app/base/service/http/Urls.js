@@ -11,3 +11,6 @@ export const GETHOMEDETAILL = () => `/react-native/movies.json`;
 
 // 带参数的url
 export const PUTPARAMS = (id) => `/v1/families/${id}`;
+
+// 登录
+export const LOGINURL = () => `/v1/auth/form`;

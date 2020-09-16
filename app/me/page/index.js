@@ -6,7 +6,9 @@
  * Content:
  */
 import Me from './Container';
+import LoginPage from './LoginPage/index';
 
 export {
-    Me
+    Me,
+    LoginPage
 }

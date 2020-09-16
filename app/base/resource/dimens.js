@@ -5,7 +5,7 @@
  *
  * Content:尺寸
  */
-import {Dimensions, Platform, PixelRatio} from 'react-native';
+import {Dimensions, Platform, PixelRatio, StyleSheet} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 const baseWidthPx = 375;
@@ -41,11 +41,11 @@ export default {
     screenWidth: width < height ? width : height,
     screenHeight: width < height ? height : width,
 
-    bigTitle:setSpText(18),
-    title:setSpText(16),
-    body:setSpText(14),
-    remark:setSpText(12),
-    small:setSpText(10),
+    bigTitle: setSpText(18),
+    title: setSpText(16),
+    body: setSpText(14),
+    remark: setSpText(12),
+    small: setSpText(10),
 
     // 导航栏高度
     navHeight: isIOS ? isIphoneX ? 84 : 64 : 44,
@@ -62,5 +62,7 @@ export default {
 
     // 导航title字体
     navTitleFont: setSpText(18),
+
+    hairlineWidth: StyleSheet.hairlineWidth,
 }
 

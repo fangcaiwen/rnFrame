@@ -15,6 +15,7 @@ export default {
     theme:'#4CAE73',
     remark:'#7b7b7b',
     pageBg:'#efefef',
+    placeholderColor:'#C9CCCE',
 
     /* ------------- 导航颜色 ------------- */
     navTopBgColor:'#ffffff',

@@ -5,9 +5,10 @@
  *
  * Content:
  */
-import { Me,} from '../page/index';
+import {Me, LoginPage} from '../page/index';
 
 const MeNav = {
-    Me:{screen:Me},
+    Me: {screen: Me},
+    LoginPage: {screen: LoginPage},
 };
 export default MeNav
