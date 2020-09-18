@@ -9,7 +9,8 @@
 import app from "./appStore/index";
 import home from "../../home/modal";
 import me from "../../me/modal";
+import login from "../../login/modal";
 
 export default store = {
-    app, home, me
+    app, home, me, login
 }

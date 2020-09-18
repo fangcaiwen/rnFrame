@@ -6,32 +6,24 @@
  * Content:
  */
 
-import {
-    createStackNavigator,
-    createAppContainer
-} from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 
 import MainTab from './MainTab';
-import MeNav from '../../me/navigator/index';
-import HomeNav from '../../home/navigator/index';
-import BaseNav from './BaseNav';
+import LoginNav from '../../login/navigator/index';
+import RouteConfig from "./RouteConfig";
 
-const navigatiors = {
-    ...HomeNav,
-    ...BaseNav,
-    ...MeNav,
-};
 
-/*
- * 配置堆栈导航
- */
-const navStack = createStackNavigator({
-    Tab: MainTab,
-    ...navigatiors
-},{
-    headerMode: 'none',
-    mode: 'card',
-    initialRouteName: "Tab"
-});
+const AppRootNavigator = createAnimatedSwitchNavigator({
+        Login: LoginNav,
+        Main: MainTab
+    },
+    {
+        defaultNavigationOptions: RouteConfig.defaultNavigationOptions,
+        initialRouteName: 'Login',
+    }
+);
 
-export default createAppContainer(navStack);
+const AppRoot = createAppContainer(AppRootNavigator);
+
+export default AppRoot

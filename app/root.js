@@ -23,10 +23,16 @@ export default class App extends Component<{}> {
         });
     }
 
+    handleNavigationChange = (prevState, newState, action) => {
+        SystemUtil.jsConsoleLog("=====navigationToaction====>", action);
+    };
+
     render() {
         return (
             <SafeAreaView forceInset={{top: 'never', bottom: 0}} style={{flex: 1, backgroundColor: colors.white}}>
-                <Navigator/>
+                <Navigator
+                    onNavigationStateChange={this.handleNavigationChange}
+                />
             </SafeAreaView>
         )
     }

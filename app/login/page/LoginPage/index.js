@@ -16,7 +16,7 @@ import {BigButton} from "../../../base/widgets/index";
 import {RowInput} from "../../../base/widgets/index";
 import {dimens} from "../../../base/resource/index";
 
-@inject("me")
+@inject("login")
 @observer
 export default class LoginPage extends BasePage {
 
@@ -32,30 +32,31 @@ export default class LoginPage extends BasePage {
     }
 
     componentWillUnmount() {
-        const {LoginStore} = this.props.me;
+        const {LoginStore} = this.props.login;
         LoginStore.clearData();
     }
 
     // 更改账号
     changeAccount = (text) => {
-        const {LoginStore} = this.props.me;
+        const {LoginStore} = this.props.login;
         LoginStore.setAccount(text);
     };
 
     // 输入密码
     changePwd = (pwd) => {
-        const {LoginStore} = this.props.me;
+        const {LoginStore} = this.props.login;
         LoginStore.setPassword(pwd)
     };
 
     // 去登录
     loginEvent = () => {
-        const {LoginStore} = this.props.me;
-        LoginStore.goToLogin();
+        // const {LoginStore} = this.props.login;
+        // LoginStore.goToLogin();
+        this.props.navigation.navigate("Main");
     };
 
     renderContent() {
-        const {LoginStore} = this.props.me;
+        const {LoginStore} = this.props.login;
         return (
             <View style={styles.container}>
                 <RowInput

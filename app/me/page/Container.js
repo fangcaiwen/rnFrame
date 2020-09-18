@@ -17,7 +17,6 @@ import {inject, observer} from "mobx-react";
 import {dimens} from "../../base/resource";
 import {BigButton} from "../../base/widgets/index";
 import {getLoginInfo, setLoginInfo} from "../../base/service/cache";
-import LoginPage from "./LoginPage";
 
 @inject("me")
 @observer
@@ -54,7 +53,7 @@ export default class MeTabScreen extends Component {
                            onPressEvent={() => this.getUserFromLocal()}/>
                 <BigButton title="去登录"
                            viewStyle={{marginTop: dimens.scaleHeight(60)}}
-                           onPressEvent={() => this.props.navigation.navigate("LoginPage")}/>
+                           onPressEvent={() => this.props.navigation.navigate("Login")}/>
             </View>
         );
     }

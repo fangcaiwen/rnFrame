@@ -7,11 +7,10 @@
  */
 import React from 'react';
 import {Image} from 'react-native';
-import {createBottomTabNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {strings, images, dimens, colors} from '../resource/index';
-import HomeTabScreen from '../../home/page/Container';
-import MineTabScreen from '../../me/page/Container';
-// import { TabBottom } from '../widgets/index';
+import HomeTabScreen from '../../home/navigator/index';
+import MineTabScreen from '../../me/navigator/index';
 
 // tab的样式等配置
 const tabbaroption = {
@@ -60,13 +59,8 @@ const AppTab = createBottomTabNavigator(
         },
     },
     {
-        lazy: true, // 默认为true。如果为false，则所有选项卡都将立即呈现。如果为true，则仅在首次使选项卡处于活动状态时才会显示这些选项卡
         initialRouteName: 'Home',// 导航器首次加载时要渲染的路线的名称
-        backBehavior: "none",//按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
-        // tabBar:<Button /> 自定义按钮
-        // tabBarVisible:false, // true或false显示或隐藏标签栏（如果未设置），则默认为true
         tabBarOptions: tabbaroption,//tab的样式等配置
-        tabBarPosition:'bottom'
     });
 
 export default AppTab;
