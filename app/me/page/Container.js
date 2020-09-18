@@ -53,7 +53,7 @@ export default class MeTabScreen extends Component {
                            onPressEvent={() => this.getUserFromLocal()}/>
                 <BigButton title="去登录"
                            viewStyle={{marginTop: dimens.scaleHeight(60)}}
-                           onPressEvent={() => this.props.navigation.navigate("Login")}/>
+                           onPressEvent={() => this.props.navigation.navigate("HomeList")}/>
             </View>
         );
     }

@@ -5,20 +5,10 @@
  *
  * Content:
  */
-import {createStackNavigator} from 'react-navigation-stack';
-import {Home, HomeList} from '../page/index';
-import RouteConfig from '../../base/navigator/RouteConfig';
+import { Home,HomeList} from '../page/index';
 
-const HomeNav = createStackNavigator({
-        Root: {screen: Home},
-        HomeList: {screen: HomeList},
-    },
-    {
-        initialRouteName: 'Root',
-        headerMode: 'none',
-        defaultNavigationOptions: RouteConfig.defaultNavigationOptions,
-    });
-
-HomeNav.navigationOptions = RouteConfig.stackNavigatorOptions;
-
+const HomeNav = {
+    Home:{screen:Home},
+    HomeList:{screen:HomeList},
+};
 export default HomeNav

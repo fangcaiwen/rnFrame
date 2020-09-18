@@ -9,8 +9,8 @@ import React from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {strings, images, dimens, colors} from '../resource/index';
-import HomeTabScreen from '../../home/navigator/index';
-import MineTabScreen from '../../me/navigator/index';
+import HomeTabScreen from '../../home/page/Container';
+import MineTabScreen from '../../me/page/Container';
 
 // tab的样式等配置
 const tabbaroption = {
