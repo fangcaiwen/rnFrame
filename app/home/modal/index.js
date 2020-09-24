@@ -8,10 +8,12 @@
 
 import HomeStore from './homeStore';
 import HomeListStore from './homeListStore';
+import CurtainStore from './curtainStore';
 
 const home = {
     HomeStore,
-    HomeListStore
+    HomeListStore,
+    CurtainStore
 };
 
 export default home

@@ -39,9 +39,9 @@ export default class HomeTabScreen extends Component {
                            viewStyle={{marginTop: dimens.scaleHeight(10)}}
                            onPressEvent={() => HomeStore.addNum()}/>
 
-                <BigButton title="点击数字更改清空"
+                <BigButton title="跳转到窗帘"
                            viewStyle={{marginTop: dimens.scaleHeight(60)}}
-                           onPressEvent={() => HomeStore.clearData()}/>
+                           onPressEvent={() => this.props.navigation.navigate("CurtainPage")}/>
 
                 <BigButton title="跳转页面"
                            viewStyle={{marginTop: dimens.scaleHeight(60)}}

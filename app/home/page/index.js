@@ -7,8 +7,10 @@
  */
 import Home from './Container';
 import HomeList from './HomeList';
+import CurtainPage from './CurtainPage';
 
 export {
     Home,
-    HomeList
+    HomeList,
+    CurtainPage
 }

@@ -110,4 +110,16 @@ react-native bundle --platform ios --dev false --entry-file index.js  --bundle-o
 
 ```
 
+### 增加库
+```
+ npm install react-native-linear-gradient --save
+
+ // ios
+
+ npx pod-install
+
+ pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
+```
+
 

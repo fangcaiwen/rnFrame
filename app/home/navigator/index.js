@@ -5,10 +5,11 @@
  *
  * Content:
  */
-import { Home,HomeList} from '../page/index';
+import { Home,HomeList,CurtainPage} from '../page/index';
 
 const HomeNav = {
     Home:{screen:Home},
     HomeList:{screen:HomeList},
+    CurtainPage:{screen:CurtainPage},
 };
 export default HomeNav

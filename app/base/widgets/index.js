@@ -9,10 +9,14 @@ import BigButton from './BigButton';
 import NavigationBar from './NavigationBar';
 import LoadingView from './LoadingView';
 import RowInput from './RowInput';
+import GnTouchView from './GnTouchView';
+import GnTouchViewText from './GnTouchViewText';
 
 export {
     BigButton,
     NavigationBar,
     LoadingView,
-    RowInput
+    RowInput,
+    GnTouchViewText,
+    GnTouchView
 }
