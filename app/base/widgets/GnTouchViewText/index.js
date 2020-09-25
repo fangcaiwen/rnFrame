@@ -25,13 +25,18 @@ class GnTouchViewText extends Component {
         });
     };
 
+    UNSAFE_componentWillReceiveProps(nextProps,nextContext){
+        this.changeTitle(nextProps.title);
+    }
+
+
     render() {
         console.log("CurtainPage GnTouchViewText is Refresh");
         const {showTitle} = this.state;
         const {viewStyle} = this.props;
         return (
             <View style={[styles.container, viewStyle]}>
-                <Text style={{color: colors.white}}>{`窗帘开启${Number(showTitle*100).toFixed(0)}%`}</Text>
+                <Text style={{color: colors.white}}>{`窗帘开启${(showTitle*100).toFixed(0)}%`}</Text>
             </View>
         )
     }
@@ -49,11 +54,11 @@ const styles = StyleSheet.create({
 
 GnTouchViewText.propTypes = {
     viewStyle: ViewPropTypes.style,
-    title: PropTypes.string,
+    title: PropTypes.number,
 };
 
 const defaultProps = {
-    title: "0"
+    title: 0
 };
 GnTouchViewText.defaultProps = defaultProps;
 

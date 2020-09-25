@@ -14,32 +14,29 @@ const ViewType = {
     normal: {
         vLineX: dimens.screenWidth / 2, // 窗帘最初开始x坐标点
         initCurtainTrackWidth: dimens.screenWidth / 2, // 窗帘轨道宽
-        curtainWidth: dimens.screenWidth / 2, // 窗帘宽度
     },
     left: {
         vLineX: 0,
         initCurtainTrackWidth: dimens.screenWidth,
-        curtainWidth: dimens.screenWidth,
     },
     right: {
         vLineX: dimens.screenWidth,
         initCurtainTrackWidth: dimens.screenWidth,
-        curtainWidth: dimens.screenWidth,
     }
 };
 
 class GnTouchView extends Component {
     constructor(props) {
         super(props);
-        const {type} = this.props;
-        this.state = {
-            pan: new Animated.ValueXY({x: ViewType[type].curtainWidth, y: 0})
-        };
+        const {type, curtainOpenScale} = this.props;
         this.vLineX = ViewType[type].vLineX;
         this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
-        this.curtainWidth = ViewType[type].curtainWidth;
-        this.sclan = 1;
+        this.curtainWidth = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        this.sclan = 1 - curtainOpenScale;
         this.moveCurtainWidth = this.curtainWidth;
+        this.state = {
+            pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
+        };
     }
 
     UNSAFE_componentWillMount() {
@@ -82,6 +79,18 @@ class GnTouchView extends Component {
         });
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps,nextContext){
+        const {type, curtainOpenScale} = nextProps;
+        this.vLineX = ViewType[type].vLineX;
+        this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
+        this.curtainWidth = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        this.sclan = 1 - curtainOpenScale;
+        this.moveCurtainWidth = this.curtainWidth;
+        this.setState({
+            pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
+        });
+    }
+
 
     // 手指移动事件
     moveEvent = (initX, dx) => {
@@ -114,7 +123,7 @@ class GnTouchView extends Component {
         this.moveCurtainWidth = rel < minGap ? minGap : rel;
 
         moveEvent(this.sclan);
-        this.state.pan.setValue({x: this.moveCurtainWidth,y:0})
+        this.state.pan.setValue({x: this.moveCurtainWidth, y: 0})
     };
 
 
@@ -165,13 +174,16 @@ GnTouchView.propTypes = {
     // 移动距离放大
     enlargeNumber: PropTypes.number,
     // 两边预留多少间隙
-    minGap: PropTypes.number
+    minGap: PropTypes.number,
+    // 窗帘初始打开比例
+    curtainOpenScale: PropTypes.number,
 };
 
 const defaultProps = {
     type: "normal",
     enlargeNumber: 4,
-    minGap: dimens.scale(20)
+    minGap: dimens.scale(20),
+    curtainOpenScale: 0
 };
 GnTouchView.defaultProps = defaultProps;
 

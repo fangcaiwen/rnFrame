@@ -22,10 +22,19 @@ export default class CurtainPage extends Component {
     componentDidMount() {
         const {CurtainStore} = this.props.home;
         CurtainStore.initData();
+
+        this.lefttime = setInterval(function () {
+            CurtainStore.setCurtainOpenScale(0.2);
+        }, 10000);
+
+        setInterval(function () {
+            clearInterval(this.lefttime);
+            CurtainStore.setCurtainTypeAndOpenScale(0.5);
+        }, 18000);
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         const {CurtainStore} = this.props.home;
         CurtainStore.clearData();
     }
@@ -42,6 +51,7 @@ export default class CurtainPage extends Component {
                 <GnTouchView
                     type={CurtainStore.type}
                     viewStyle={{backgroundColor: '#167bd2'}}
+                    curtainOpenScale={CurtainStore.curtainOpenScale}
                     leftChildren={<View style={{flex: 1, flexDirection: 'row'}}>
                         <LinearGradient colors={['#66a7df', '#94caf4', '#78caf8',]} style={{flex: 2}}/>
                         <LinearGradient colors={['#5098d9', '#95caf0', '#7ac5f5',]} style={{flex: 2}}/>
@@ -50,16 +60,17 @@ export default class CurtainPage extends Component {
                         <LinearGradient colors={['#2d87d5', '#63b1ef', '#65bef3',]} style={{flex: 1}}/>
                     </View>}
                     rightChildren={<View style={{flex: 1, flexDirection: 'row'}}>
-                        <LinearGradient colors={['#2d87d5', '#63b1ef', '#65bef3',]} style={{flex: 1}}/>
-                        <LinearGradient colors={['#3287d4', '#75b8ef', '#6dc3f4',]} style={{flex: 2}}/>
-                        <LinearGradient colors={['#4590d8', '#85c0ee', '#72c5f5',]} style={{flex: 2}}/>
-                        <LinearGradient colors={['#5098d9', '#95caf0', '#7ac5f5',]} style={{flex: 2}}/>
-                        <LinearGradient colors={['#66a7df', '#94caf4', '#78caf8',]} style={{flex: 2}}/>
+                        <LinearGradient colors={['#2d87d5', '#63b1ef', '#65bef3',]} style={{flex: 1, margin: -1}}/>
+                        <LinearGradient colors={['#3287d4', '#75b8ef', '#6dc3f4',]} style={{flex: 2, margin: -1}}/>
+                        <LinearGradient colors={['#4590d8', '#85c0ee', '#72c5f5',]} style={{flex: 2, margin: -1}}/>
+                        <LinearGradient colors={['#5098d9', '#95caf0', '#7ac5f5',]} style={{flex: 2, margin: -1}}/>
+                        <LinearGradient colors={['#66a7df', '#94caf4', '#78caf8',]} style={{flex: 2, margin: -1}}/>
                     </View>}
                     moveEvent={(sclanCalue) => this.mGnTouchViewText.changeTitle(sclanCalue)}
                     rouchEndEvent={(value) => console.log("CurtainPage sendValue", value)}
                 />
-                <GnTouchViewText viewStyle={{position: 'absolute', top: 60, alignSelf: 'center'}} title={"0"}
+                <GnTouchViewText viewStyle={{position: 'absolute', top: 60, alignSelf: 'center'}}
+                                 title={CurtainStore.curtainOpenScale}
                                  ref={(view) => this.mGnTouchViewText = view}/>
             </View>
         )
