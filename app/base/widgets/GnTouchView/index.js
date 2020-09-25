@@ -28,10 +28,11 @@ const ViewType = {
 class GnTouchView extends Component {
     constructor(props) {
         super(props);
-        const {type, curtainOpenScale} = this.props;
+        const {type, curtainOpenScale, minGap} = this.props;
         this.vLineX = ViewType[type].vLineX;
         this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
-        this.curtainWidth = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        let relC = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        this.curtainWidth = relC < minGap ? minGap : relC;
         this.sclan = 1 - curtainOpenScale;
         this.moveCurtainWidth = this.curtainWidth;
         this.state = {
@@ -79,16 +80,18 @@ class GnTouchView extends Component {
         });
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps,nextContext){
-        const {type, curtainOpenScale} = nextProps;
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+        const {type, curtainOpenScale, minGap} = nextProps;
         this.vLineX = ViewType[type].vLineX;
         this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
-        this.curtainWidth = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        let relC = this.initCurtainTrackWidth * (1 - curtainOpenScale);
+        this.curtainWidth = relC < minGap ? minGap : relC;
         this.sclan = 1 - curtainOpenScale;
         this.moveCurtainWidth = this.curtainWidth;
-        this.setState({
-            pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
-        });
+        // this.setState({
+        //     pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
+        // });
+        this.state.pan.setValue({x: this.moveCurtainWidth, y: 0})
     }
 
 

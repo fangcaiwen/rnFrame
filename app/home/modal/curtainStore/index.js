@@ -57,6 +57,43 @@ class curtainSource {
         this.type = "right";
     };
 
+    // 打开全部窗帘
+    @action
+    openAllCurtain = () => {
+        this.closeAllTimeListen();
+        let step = 0.05;
+        this.openTimer = setInterval(() => {
+            let newCsc = this.curtainOpenScale;
+            if (newCsc + step >= 1) {
+                this.curtainOpenScale = 1;
+                clearInterval(this.openTimer);
+                return;
+            }
+            this.curtainOpenScale = newCsc + step;
+        }, 200);
+    };
+
+    // 关闭全部窗帘
+    @action
+    closeAllCurtain = () => {
+        this.closeAllTimeListen();
+        let step = 0.05;
+        this.closeTimer = setInterval(() => {
+            let newCsc = this.curtainOpenScale;
+            if (newCsc - step <= 0) {
+                this.curtainOpenScale = 0;
+                clearInterval(this.closeTimer);
+                return;
+            }
+            this.curtainOpenScale = newCsc - step;
+        }, 200);
+    };
+
+    // 关闭暂停所有定时器
+    closeAllTimeListen = () => {
+        this.openTimer && clearInterval(this.openTimer);
+        this.closeTimer && clearInterval(this.closeTimer);
+    };
 
     @action
     clearData = () => {
