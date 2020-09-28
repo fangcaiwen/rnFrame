@@ -11,4 +11,6 @@ export default {
     mine_normal:require('./image/mine_normal.png'),
 
     nav_back:require('./image/left_back.png'),
+    rowLeft:require('./image/rowLeft.png'),
+    rowRight:require('./image/rowRight.png'),
 }

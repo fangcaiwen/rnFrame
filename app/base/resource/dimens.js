@@ -41,6 +41,7 @@ export default {
     screenWidth: width < height ? width : height,
     screenHeight: width < height ? height : width,
 
+    superBigTitle:setSpText(20),
     bigTitle: setSpText(18),
     title: setSpText(16),
     body: setSpText(14),

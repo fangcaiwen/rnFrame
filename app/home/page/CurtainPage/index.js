@@ -40,37 +40,53 @@ export default class CurtainPage extends Component {
 
     // 窗帘移动事件
     curtainMoveEvent = (value) => {
-        const {CurtainStore} = this.props.home;
         this.mGnTouchViewText.changeTitle(value);
-        CurtainStore.closeAllTimeListen();
     };
 
     // 窗帘移动结束事件
     curtainMoveEndEvent = (value) => {
         const {CurtainStore} = this.props.home;
-        CurtainStore.setCurtainOpenScale(value);
-        console.log("CurtainPage is ===== endTouch", value);
+        let newValue = value;
+        if (newValue <= 0) {
+            newValue = 0;
+        }
+        if (newValue >= 1) {
+            newValue = 1;
+        }
+        CurtainStore.setCurtainOpenScale(newValue);
+        // TODO 发送触摸滑动指令
+        console.log("CurtainPage is animate ===running===and send==end ", newValue);
     };
 
     // 暂停指令
     stopCurtainIndiction = () => {
-        const {CurtainStore} = this.props.home;
-        CurtainStore.closeAllTimeListen();
-        console.log("CurtainPage is ===== Stop", CurtainStore.curtainOpenScale);
+        this.mGnTouchView.stopCurtainFunc(false);
     };
 
     // 打开指令
     startCurtainIndiction = () => {
         const {CurtainStore} = this.props.home;
-        CurtainStore.openAllCurtain();
-        console.log("CurtainPage is ===== Opening", CurtainStore.curtainOpenScale);
+        // 已开至最大
+        if (CurtainStore.curtainOpenScale >= 1) return;
+        console.log("CurtainPage is Opening all");
+        this.mGnTouchViewText.isShowEvent(false);
+        // TODO 发送全开指令
+        this.mGnTouchView.openAllCurtainFunc(() => {
+            this.mGnTouchViewText.isShowEvent(true);
+        });
     };
 
     // 关闭指令
     closeCurtainIndiction = () => {
         const {CurtainStore} = this.props.home;
-        CurtainStore.closeAllCurtain();
-        console.log("CurtainPage is Closeing ", CurtainStore.curtainOpenScale);
+        // 已开至最小
+        if (CurtainStore.curtainOpenScale <= 0) return;
+        console.log("CurtainPage is Closeing all");
+        this.mGnTouchViewText.isShowEvent(false);
+        // TODO 发送关指令
+        this.mGnTouchView.closeAllCurtainFunc(() => {
+            this.mGnTouchViewText.isShowEvent(true);
+        });
     };
 
 
@@ -84,6 +100,7 @@ export default class CurtainPage extends Component {
             <View style={styles.container}>
                 <GnTouchView
                     type={CurtainStore.type}
+                    ref={(view) => this.mGnTouchView = view}
                     viewStyle={{backgroundColor: '#167bd2'}}
                     curtainOpenScale={CurtainStore.curtainOpenScale}
                     leftChildren={<View style={{flex: 1, flexDirection: 'row'}}>

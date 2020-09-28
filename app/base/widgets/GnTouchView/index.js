@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, PanResponder, Animated, ViewPropTypes} from 'react-native';
+import {View, StyleSheet, PanResponder, Animated, ViewPropTypes, Easing} from 'react-native';
 import {dimens} from "../../../base/resource";
 
 const ViewType = {
@@ -31,14 +31,36 @@ class GnTouchView extends Component {
         const {type, curtainOpenScale, minGap} = this.props;
         this.vLineX = ViewType[type].vLineX;
         this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
-        let relC = this.initCurtainTrackWidth * (1 - curtainOpenScale);
-        this.curtainWidth = relC < minGap ? minGap : relC;
-        this.sclan = 1 - curtainOpenScale;
+        let relC = (this.initCurtainTrackWidth - minGap) * (1 - curtainOpenScale);
+        this.curtainWidth = minGap + relC;
+        this.sclan = curtainOpenScale;
         this.moveCurtainWidth = this.curtainWidth;
         this.state = {
             pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
         };
+        this.initAnimate();
     }
+
+    // 定义全开和全关动画
+    initAnimate = () => {
+        const {minGap} = this.props;
+        this.openAllCurtain = Animated.timing(
+            this.state.pan.x, {
+                toValue: minGap,
+                duration: 1500,    //弹跳系数
+                easing: Easing.linear,
+                delay: 1000
+            }
+        );
+        this.closeAllCurtain = Animated.timing(
+            this.state.pan.x, {
+                toValue: this.initCurtainTrackWidth,
+                duration: 1500,    //弹跳系数
+                easing: Easing.linear,
+                delay: 1000
+            }
+        );
+    };
 
     UNSAFE_componentWillMount() {
         const {rouchEndEvent} = this.props;
@@ -84,14 +106,12 @@ class GnTouchView extends Component {
         const {type, curtainOpenScale, minGap} = nextProps;
         this.vLineX = ViewType[type].vLineX;
         this.initCurtainTrackWidth = ViewType[type].initCurtainTrackWidth;
-        let relC = this.initCurtainTrackWidth * (1 - curtainOpenScale);
-        this.curtainWidth = relC < minGap ? minGap : relC;
-        this.sclan = 1 - curtainOpenScale;
+        let relC = (this.initCurtainTrackWidth - minGap) * (1 - curtainOpenScale);
+        this.curtainWidth = minGap + relC;
+        this.sclan = curtainOpenScale;
         this.moveCurtainWidth = this.curtainWidth;
-        // this.setState({
-        //     pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
-        // });
-        this.state.pan.setValue({x: this.moveCurtainWidth, y: 0})
+        this.state.pan.setValue({x: this.moveCurtainWidth, y: 0});
+        // this.initAnimate();
     }
 
 
@@ -114,19 +134,50 @@ class GnTouchView extends Component {
         this.moveCurtainWidth = this.curtainWidth;
         let rel;
         if (tag) {
-            rel = this.moveCurtainWidth - (enlargeNumber * distance / (dimens.screenWidth)) * this.initCurtainTrackWidth;
+            rel = this.moveCurtainWidth - (enlargeNumber * distance / dimens.screenWidth) * this.initCurtainTrackWidth;
+            if (rel <= minGap) {
+                rel = minGap;
+            }
         } else {
-            rel = this.moveCurtainWidth + (enlargeNumber * distance / (dimens.screenWidth)) * this.initCurtainTrackWidth;
-            if (rel > this.initCurtainTrackWidth) {
+            rel = this.moveCurtainWidth + (enlargeNumber * distance / dimens.screenWidth) * this.initCurtainTrackWidth;
+            if (rel >= this.initCurtainTrackWidth) {
                 rel = this.initCurtainTrackWidth;
             }
         }
 
-        this.sclan = (this.initCurtainTrackWidth - (rel < 0 ? 0 : rel)) / this.initCurtainTrackWidth;
-        this.moveCurtainWidth = rel < minGap ? minGap : rel;
+        this.sclan = (this.initCurtainTrackWidth - rel) / (this.initCurtainTrackWidth - minGap);
+        this.moveCurtainWidth = rel;
 
         moveEvent(this.sclan);
         this.state.pan.setValue({x: this.moveCurtainWidth, y: 0})
+    };
+
+    // 全开事件
+    openAllCurtainFunc = (callBack) => {
+        this.openAllCurtain.start(() => {
+            callBack();
+            this.stopCurtainFunc(true);
+        });
+    };
+
+    // 全关事件
+    closeAllCurtainFunc = (callBack) => {
+        this.closeAllCurtain.start(() => {
+            callBack();
+            this.stopCurtainFunc(true);
+        });
+
+    };
+
+    // 暂停
+    stopCurtainFunc = (canSend = false) => {
+        const {minGap} = this.props;
+        let mScale = (this.initCurtainTrackWidth - parseInt(JSON.stringify(this.state.pan.x))) / (this.initCurtainTrackWidth - minGap);
+        this.curtainWidth = parseInt(JSON.stringify(this.state.pan.x));
+        this.openAllCurtain.stop();
+        this.closeAllCurtain.stop();
+        const {rouchEndEvent} = this.props;
+        canSend && rouchEndEvent(mScale);
     };
 
 
