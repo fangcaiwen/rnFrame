@@ -39,6 +39,8 @@ class GnTouchView extends Component {
             pan: new Animated.ValueXY({x: this.curtainWidth, y: 0})
         };
         this.initAnimate();
+        // 是否正在全开全关
+        this.isActioning = false;
     }
 
     // 定义全开和全关动画
@@ -154,6 +156,8 @@ class GnTouchView extends Component {
 
     // 全开事件
     openAllCurtainFunc = (callBack) => {
+        if (this.isActioning) return;
+        this.isActioning = true;
         this.openAllCurtain.start(() => {
             callBack();
             this.stopCurtainFunc(true);
@@ -162,6 +166,8 @@ class GnTouchView extends Component {
 
     // 全关事件
     closeAllCurtainFunc = (callBack) => {
+        if (this.isActioning) return;
+        this.isActioning = true;
         this.closeAllCurtain.start(() => {
             callBack();
             this.stopCurtainFunc(true);
@@ -171,6 +177,7 @@ class GnTouchView extends Component {
 
     // 暂停
     stopCurtainFunc = (canSend = false) => {
+        this.isActioning = false;
         const {minGap} = this.props;
         let mScale = (this.initCurtainTrackWidth - parseInt(JSON.stringify(this.state.pan.x))) / (this.initCurtainTrackWidth - minGap);
         this.curtainWidth = parseInt(JSON.stringify(this.state.pan.x));
