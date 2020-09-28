@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     mcontainer: {
-        width: 120,
+        width: 160,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
