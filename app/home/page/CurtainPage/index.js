@@ -122,6 +122,7 @@ export default class CurtainPage extends Component {
                 />
                 <GnTouchViewText viewStyle={{position: 'absolute', top: 60, alignSelf: 'center'}}
                                  title={CurtainStore.curtainOpenScale}
+                                 type={CurtainStore.type}
                                  ref={(view) => this.mGnTouchViewText = view}/>
                 <BigButton viewStyle={{position: 'absolute', bottom: 30, alignSelf: 'center'}}
                            title={'开启'}

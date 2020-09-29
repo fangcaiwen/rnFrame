@@ -34,18 +34,59 @@ class GnTouchViewText extends Component {
     // 展示箭头
     showRow = () => {
         const {showTitle, isShow} = this.state;
+        const {type} = this.props;
         if (!isShow) return null;
         if (showTitle >= 0.8) {
-            return <View style={styles.bottomView}>
-                <Image source={images.rowRight} style={styles.rowImageStyle}/>
-                <Image source={images.rowLeft} style={styles.rowImageStyle}/>
-            </View>
+            let child = null;
+            switch (type) {
+                case 'normal':
+                    child =
+                        <View style={styles.bottomView}>
+                            <Image source={images.rowRight} style={styles.rowImageStyle}/>
+                            <Image source={images.rowLeft} style={styles.rowImageStyle}/>
+                        </View>;
+                    break;
+                case 'left' :
+                    child =
+                        <View style={[styles.bottomView, {justifyContent: 'flex-start'}]}>
+                            <Image source={images.rowRight} style={styles.rowImageStyle}/>
+                        </View>;
+                    break;
+                case 'right':
+                    child =
+                        <View style={[styles.bottomView, {justifyContent: 'flex-end'}]}>
+                            <Image source={images.rowLeft} style={styles.rowImageStyle}/>
+                        </View>;
+                    break;
+            }
+            return child;
         }
         if (showTitle <= 0.2) {
-            return <View style={[styles.bottomView, {justifyContent: 'center'}]}>
-                <Image source={images.rowLeft} style={styles.rowImageStyle}/>
-                <Image source={images.rowRight} style={styles.rowImageStyle}/>
-            </View>
+
+            let child = null;
+            switch (type) {
+                case 'normal':
+                    child =
+                        <View style={[styles.bottomView, {justifyContent: 'center'}]}>
+                            <Image source={images.rowLeft} style={styles.rowImageStyle}/>
+                            <Image source={images.rowRight} style={styles.rowImageStyle}/>
+                        </View>
+                    break;
+                case 'left' :
+                    child =
+                        <View style={[styles.bottomView, {justifyContent: 'flex-end'}]}>
+                            <Image source={images.rowLeft} style={styles.rowImageStyle}/>
+                        </View>;
+                    break;
+                case 'right':
+                    child =
+
+                        <View style={[styles.bottomView, {justifyContent: 'flex-start'}]}>
+                            <Image source={images.rowRight} style={styles.rowImageStyle}/>
+                        </View>;
+                    break;
+            }
+            return child;
         }
         return null;
     };
@@ -54,11 +95,36 @@ class GnTouchViewText extends Component {
     showRemark = () => {
         const {showTitle, isShow} = this.state;
         if (!isShow) return "";
+        const {type} = this.props;
         if (showTitle >= 0.8) {
-            return "左右滑动关闭窗帘";
+            let str = '';
+            switch (type) {
+                case 'normal':
+                    str = "左右滑动关闭窗帘";
+                    break;
+                case 'left' :
+                    str = "向右滑动关闭窗帘";
+                    break;
+                case 'right':
+                    str = "向左滑动关闭窗帘";
+                    break;
+            }
+            return str;
         }
         if (showTitle <= 0.2) {
-            return "左右滑动打开窗帘";
+            let str = '';
+            switch (type) {
+                case 'normal':
+                    str = "左右滑动打开窗帘";
+                    break;
+                case 'left' :
+                    str = "向左滑动打开窗帘";
+                    break;
+                case 'right':
+                    str = "向右滑动打开窗帘";
+                    break;
+            }
+            return str;
         }
         return "";
     };
@@ -78,7 +144,8 @@ class GnTouchViewText extends Component {
         return (
             <View style={[styles.container, viewStyle]}>
                 <View style={styles.mcontainer}>
-                    <Text style={styles.titleStyle}>{isShow ? `窗帘开至${(showTitle * 100).toFixed(0)}%` : ''}</Text>
+                    <Text
+                        style={styles.titleStyle}>{isShow ? showTitle == 0 ? `窗帘已关闭` : `窗帘开至${(showTitle * 100).toFixed(0)}%` : ''}</Text>
                 </View>
                 {this.showRow()}
                 <Text style={styles.remarkStyle}>{this.showRemark()}</Text>
@@ -133,10 +200,12 @@ const styles = StyleSheet.create({
 GnTouchViewText.propTypes = {
     viewStyle: ViewPropTypes.style,
     title: PropTypes.number,
+    type: PropTypes.string
 };
 
 const defaultProps = {
-    title: 0
+    title: 0,
+    type: 'normal'
 };
 GnTouchViewText.defaultProps = defaultProps;
 

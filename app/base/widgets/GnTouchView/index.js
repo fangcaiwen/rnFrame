@@ -16,11 +16,11 @@ const ViewType = {
         initCurtainTrackWidth: dimens.screenWidth / 2, // 窗帘轨道宽
     },
     left: {
-        vLineX: 0,
+        vLineX: dimens.screenWidth,
         initCurtainTrackWidth: dimens.screenWidth,
     },
     right: {
-        vLineX: dimens.screenWidth,
+        vLineX: 0,
         initCurtainTrackWidth: dimens.screenWidth,
     }
 };
@@ -193,7 +193,7 @@ class GnTouchView extends Component {
         const {type, viewStyle, leftChildren, rightChildren} = this.props;
         return (
             <View
-                style={[styles.container, type == "left" ? {justifyContent: 'flex-end'} : {justifyContent: 'space-between'}, viewStyle]} {...this._panResponder.panHandlers}>
+                style={[styles.container, type == "right" ? {justifyContent: 'flex-end'} : {justifyContent: 'space-between'}, viewStyle]} {...this._panResponder.panHandlers}>
                 <Animated.View style={{
                     width: this.state.pan.x,
                     height: '100%',
